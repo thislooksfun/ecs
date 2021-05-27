@@ -1,0 +1,8 @@
+.DS_Store
+.env
+*.tgz
+/.svelte-kit
+/build
+/coverage
+/functions
+node_modules
