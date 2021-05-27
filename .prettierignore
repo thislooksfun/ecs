@@ -5,6 +5,7 @@ package-lock.json
 /build
 /.svelte-kit
 CHANGELOG.md
+static/site.webmanifest
 
 # (local) env files
 .env
@@ -29,9 +30,11 @@ yarn-error.log*
 # Coverage report
 /coverage
 
-# Binary files
+# Unsupported file types
 *.png
 *.tgz
+*.txt
+*.ico
 
 # Misc files
 .gitignore
