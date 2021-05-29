@@ -7,7 +7,7 @@
     "prepare": "is-ci || husky install",
     "dev": "svelte-kit dev",
     "generate": "scripts/generate.sh",
-    "build": "svelte-kit build",
+    "build": "npm run generate && svelte-kit build",
     "preview": "svelte-kit preview",
     "clean": "del-cli .svelte-kit build",
     "validate": "svelte-check --tsconfig ./tsconfig.json",
