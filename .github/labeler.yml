@@ -1,0 +1,56 @@
+################
+# CI / Testing #
+################
+
+# CI
+ci: .github/**/*
+
+# Tests
+tests:
+  - tests/**/*
+  - jest.config.js
+tests/e2e: tests/e2e/**/*
+tests/unit: tests/unit/**/*
+
+########
+# Code #
+########
+
+components: src/components/**/*
+
+generators:
+  - scripts/generate.sh
+  - src/**/.generate.js
+  - src/**/.template
+
+lib: src/lib/**/*
+
+routes:
+  - src/routes/**/*
+  - "!src/routes/**/__layout.svelte"
+theme:
+  - src/theme/**/*
+  - src/routes/**/__layout.svelte
+
+########
+# Meta #
+########
+
+# Mark as 'frontend' if only svelte files were changed
+frontend:
+  - all: ["src/**/*.svelte"]
+
+# Mark as 'backend' if at least one non-svelte src file changed
+backend:
+  - all: ["src/**/*"]
+  - any: ["!src/**/*.svelte"]
+
+########
+# Misc #
+########
+
+labeler: .github/labeler.yml
+
+dependencies:
+  - package.json
+  - package-lock.json
