@@ -6,6 +6,7 @@
   "scripts": {
     "prepare": "is-ci || husky install",
     "dev": "svelte-kit dev",
+    "generate": "scripts/generate.sh",
     "build": "svelte-kit build",
     "preview": "svelte-kit preview",
     "clean": "del-cli .svelte-kit build",

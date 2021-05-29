@@ -35,6 +35,7 @@ yarn-error.log*
 *.tgz
 *.txt
 *.ico
+*.sh
 
 # Misc files
 .gitignore
