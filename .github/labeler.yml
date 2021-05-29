@@ -28,9 +28,12 @@ lib: src/lib/**/*
 routes:
   - src/routes/**/*
   - "!src/routes/**/__layout.svelte"
+
 theme:
   - src/theme/**/*
   - src/routes/**/__layout.svelte
+
+api: src/routes/api/**/*
 
 ########
 # Meta #
