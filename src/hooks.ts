@@ -1,6 +1,6 @@
 import type { Handle, GetSession } from "@sveltejs/kit";
 import type { Locals, Session } from "$lib/types";
-import { signoutCookie } from "./routes/auth/signout";
+import { signoutCookie } from "./routes/api/v1/auth/signout";
 import { User } from "$lib/db";
 import cookie from "cookie";
 
