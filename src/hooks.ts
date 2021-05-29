@@ -1,5 +1,6 @@
 import type { Handle, GetSession } from "@sveltejs/kit";
 import type { Locals, Session } from "$lib/types";
+import { signoutCookie } from "./routes/auth/signout";
 import { User } from "$lib/db";
 import cookie from "cookie";
 
@@ -17,6 +18,15 @@ export const handle: Handle = async ({ request, render }) => {
   }
 
   const response = await render(request);
+
+  // If we have an invalid session, clear it.
+  if (
+    cookies.session &&
+    !request.locals.user &&
+    !response.headers["set-cookie"]
+  ) {
+    response.headers["set-cookie"] = signoutCookie;
+  }
 
   return response;
 };
