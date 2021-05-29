@@ -13,10 +13,15 @@
     "validate": "svelte-check --tsconfig ./tsconfig.json",
     "lint": "prettier -c --plugin-search-dir=. '**/*'"
   },
+  "dependencies": {
+    "dotenv": "^10.0.0",
+    "pg": "^8.6.0"
+  },
   "devDependencies": {
     "@commitlint/config-conventional": "^12.1.4",
     "@sveltejs/adapter-node": "^1.0.0-next.22",
     "@sveltejs/kit": "next",
+    "@types/pg": "^8.6.0",
     "commitlint": "^12.1.4",
     "del-cli": "^3.0.1",
     "husky": "^6.0.0",
