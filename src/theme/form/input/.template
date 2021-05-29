@@ -1,0 +1,96 @@
+<script lang="ts">
+  export let placeholder: string | undefined = undefined;
+  export let value: [[valtype]];
+
+  type Status = "working" | "success" | "warning" | "error";
+
+  export let disabled: boolean = false;
+  export let status: undefined | Status = undefined;
+</script>
+
+<div class="input-wrapper">
+  <div class="input">
+    {#if $$slots.label}
+      <div class="label">
+        <slot name="label" />
+      </div>
+    {/if}
+
+    <!-- TODO add a leading icon -->
+    <input
+      type="[[type]]"
+      class:working={status === "working"}
+      class:success={status === "success"}
+      class:warning={status === "warning"}
+      class:error={status === "error"}
+      {disabled}
+      {placeholder}
+      bind:value
+    />
+  </div>
+
+  {#if $$slots.validation}
+    <div class="validation">
+      <slot name="validation" />
+    </div>
+  {/if}
+</div>
+
+<style lang="less">
+  .input-wrapper {
+    position: relative;
+    text-align: left;
+
+    .input {
+      .label {
+        position: absolute;
+        z-index: 10;
+        top: -0.5em;
+        left: 0.75em;
+        padding: 0 0.25em;
+        background-color: var(--color-bg-primary);
+        color: var(--color-text-secondary);
+        font-size: 0.9em;
+      }
+
+      input {
+        position: relative;
+        width: 100%;
+        border: 1px solid var(--color-text-primary);
+        border-radius: 0.5em;
+        background: none;
+        text-indent: 1em;
+        color: var(--color-text-primary);
+        font-size: 1em;
+        line-height: 2em;
+        padding: 0.25em;
+
+        &:focus {
+          border-color: var(--color-primary);
+          box-shadow: 0 0 0 0.75px var(--color-primary);
+          outline: none;
+        }
+
+        &:disabled {
+          border-color: var(--color-text-secondary);
+        }
+
+        &.warning {
+          border-color: var(--color-warning);
+        }
+
+        &.working {
+          border-color: var(--color-primary);
+        }
+
+        &.error {
+          border-color: var(--color-error);
+        }
+
+        &.success {
+          border-color: var(--color-success);
+        }
+      }
+    }
+  }
+</style>
