@@ -56,4 +56,10 @@ export class User implements UserData {
     if (!this.passhash) return false;
     return await compare(password, this.passhash);
   }
+
+  // @ts-expect-error -- this function is currently unimplemented
+  async sendEmail(sender: string, title: string, body: string): Promise<void> {
+    // TODO: Send an email to the user.
+    // const from = `${sender}@thislooks.fun`;
+  }
 }
