@@ -81,6 +81,17 @@ export class User implements UserData {
     await this.sendVerificationEmail();
   }
 
+  async updatePassword(password: string): Promise<void> {
+    let passhash = await hash(password);
+    await this.updateAndSave({ passhash });
+    await this.sendEmail(
+      "accounts",
+      "Your ecs password has been changed",
+      //  TODO: Add a message with a link to reset the password.
+      "TODO"
+    );
+  }
+
   async sendVerificationEmail(): Promise<void> {
     if (this.email_verified) return;
     // TODO: Send a confirmation email
