@@ -1,4 +1,4 @@
-import { insert, select, selectExists } from "./connection";
+import { insert, select, selectExists, update } from "./connection";
 import { compare, hash } from "$lib/passhash";
 
 interface UserData {
@@ -70,5 +70,16 @@ export class User implements UserData {
   async sendEmail(sender: string, title: string, body: string): Promise<void> {
     // TODO: Send an email to the user.
     // const from = `${sender}@thislooks.fun`;
+  }
+
+  private async updateAndSave(
+    data: Partial<Omit<UserData, "id">>
+  ): Promise<void> {
+    // Do this first in case it fails.
+    await update("users", data, { id: this.id });
+
+    if ("email" in data) this.email = data.email!;
+    if ("email_verified" in data) this.email_verified = data.email_verified!;
+    if ("passhash" in data) this.passhash = data.passhash;
   }
 }
