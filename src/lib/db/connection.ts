@@ -15,6 +15,15 @@ export async function query<
   return await pool.query(query, values);
 }
 
+function buildKVPairs<I extends any = any>(
+  data: { [key: string]: I },
+  start: number = 1
+): { s: string; v: I[] } {
+  const keys = Object.keys(data);
+  const items = keys.map((k, i) => `${k}=$${i + start}`).join(", ");
+  return { s: items, v: Object.values(data) };
+}
+
 function buildSelectQuery<I extends any = any>(
   table: string,
   rows: string,
@@ -23,16 +32,16 @@ function buildSelectQuery<I extends any = any>(
   join?: { [key: string]: string },
   joinType: string = "INNER"
 ): string {
-  const keys = Object.keys(where);
-  const checks = keys.map((k, i) => `${k}=$${i + 1}`).join(", ");
-
   let q = `SELECT ${rows} FROM ${table}`;
   if (join) {
     for (const [table, on] of Object.entries(join)) {
       q += ` ${joinType} JOIN ${table} ON ${on}`;
     }
   }
+
+  const { s: checks } = buildKVPairs(where);
   q += ` WHERE ${checks}`;
+
   if (limit) q += ` LIMIT ${limit}`;
 
   return q;
