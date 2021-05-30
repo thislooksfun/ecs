@@ -93,6 +93,22 @@ export async function insert<
   return await query(q, values);
 }
 
+export async function update<
+  R extends QueryResultRow = any,
+  I extends any = any,
+  J extends any = any
+>(
+  table: string,
+  data: { [key: string]: I },
+  where: { [key: string]: J }
+): Promise<QueryResult<R>> {
+  const { s: set, v: setVals } = buildKVPairs(data);
+  const { s: checks, v: checkVals } = buildKVPairs(where, setVals.length + 1);
+
+  const q = `UPDATE ${table} SET ${set} WHERE ${checks}`;
+  return await query(q, [...setVals, ...checkVals]);
+}
+
 export async function del<R extends QueryResultRow = any, I extends any = any>(
   table: string,
   where: { [key: string]: I }
