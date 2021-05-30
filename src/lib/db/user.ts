@@ -57,6 +57,13 @@ export class User implements UserData {
     return await compare(password, this.passhash);
   }
 
+  async sendVerificationEmail(): Promise<void> {
+    if (this.email_verified) return;
+    // TODO: Send a confirmation email
+    // BODY: After setting the users email we should send them a confirmation
+    // BODY: message so we can verify that the address is, in fact, valid.
+  }
+
   // @ts-expect-error -- this function is currently unimplemented
   async sendEmail(sender: string, title: string, body: string): Promise<void> {
     // TODO: Send an email to the user.
