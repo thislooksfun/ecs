@@ -24,7 +24,9 @@ export class User implements UserData {
   static async create(email: string, password?: string): Promise<User> {
     let passhash = password ? await hash(password) : undefined;
     const { rows } = await insert("users", { email, passhash }, "*");
-    return new User(rows[0]);
+    const user = new User(rows[0]);
+    await user.sendVerificationEmail();
+    return user;
   }
 
   static async exists(email: string): Promise<boolean> {
