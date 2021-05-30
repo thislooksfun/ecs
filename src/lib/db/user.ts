@@ -4,17 +4,20 @@ import { compare, hash } from "$lib/passhash";
 interface UserData {
   id: number;
   email: string;
+  email_verified: boolean;
   passhash?: string;
 }
 
 export class User implements UserData {
   id: number;
   email: string;
+  email_verified: boolean;
   passhash?: string;
 
   private constructor(data: UserData) {
     this.id = data.id;
     this.email = data.email;
+    this.email_verified = data.email_verified;
     this.passhash = data.passhash;
   }
 
