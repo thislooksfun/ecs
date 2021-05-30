@@ -59,6 +59,28 @@ export class User implements UserData {
     return await compare(password, this.passhash);
   }
 
+  async updateEmail(email: string): Promise<void> {
+    if (email === this.email) return;
+
+    // TODO: Send an notification to the old email
+    // BODY: When the email is changed we should notify the old email address
+    // BODY: and give a way to restore their account, just in case it was
+    // BODY: changed maliciously.
+
+    // const oldEmail = this.email;
+    await this.updateAndSave({ email, email_verified: false });
+
+    await this.sendEmail(
+      "accounts",
+      "Your ecs email has been changed",
+      // TODO: add a working 'click here' link to set the username back to the
+      // previous value and change the password.
+      // `Your ecs' account's email has been changed from ${oldEmail} to ${email}. If this was you then you can ignore this email. If it was not, please click here to secure your account.`
+      "TODO"
+    );
+    await this.sendVerificationEmail();
+  }
+
   async sendVerificationEmail(): Promise<void> {
     if (this.email_verified) return;
     // TODO: Send a confirmation email
