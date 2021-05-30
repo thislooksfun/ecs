@@ -1,7 +1,6 @@
 <script lang="ts">
   import AuthModal from "$components/auth/authModal.svelte";
-  import { post } from "$lib/util";
-  import { session, updateSession } from "$lib/clientUtil";
+  import { post, session, updateSession } from "$lib/clientUtil";
 
   async function logout() {
     await post("/api/v1/auth/signout", {});

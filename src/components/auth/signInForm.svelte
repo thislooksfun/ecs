@@ -4,19 +4,24 @@
   import PasswordInput from "$theme/form/input/password.svelte";
   import Submit from "$theme/form/submit.svelte";
 
-  import { post } from "$lib/util";
+  import { post } from "$lib/clientUtil";
 
   let email = "a@b.d";
   let password = "pw";
   export let done: () => void;
 
-  async function submit() {
-    const res = await post("/api/v1/auth/signin", { email, password });
+  interface SignInResponse {
+    successful: true;
+  }
 
-    if (res.successful) {
-      done();
-    } else {
+  async function submit() {
+    const path = "/api/v1/auth/signin";
+    const res = await post<SignInResponse>(path, { email, password });
+
+    if ("errors" in res) {
       // TODO: Handle errors
+    } else {
+      done();
     }
   }
 </script>

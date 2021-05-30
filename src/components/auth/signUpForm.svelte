@@ -4,7 +4,7 @@
   import PasswordInput from "$theme/form/input/password.svelte";
   import Submit from "$theme/form/submit.svelte";
 
-  import { post } from "$lib/util";
+  import { post } from "$lib/clientUtil";
 
   let email = "a@b.c";
   let emailError = "";
@@ -35,14 +35,17 @@
     return valid;
   }
 
+  interface SignUpResponse {
+    successful: true;
+  }
+
   async function submit() {
     if (!validate()) return;
 
-    const res = await post("/api/v1/auth/signup", { email, password });
+    const path = "/api/v1/auth/signup";
+    const res = await post<SignUpResponse>(path, { email, password });
 
-    if (res.successful) {
-      done();
-    } else if (res.errors) {
+    if ("errors" in res) {
       if (res.errors.email) {
         emailError = res.errors.email;
       }
@@ -52,6 +55,8 @@
       if (res.errors.password2) {
         pw2Error = res.errors.password2;
       }
+    } else {
+      done();
     }
   }
 </script>
