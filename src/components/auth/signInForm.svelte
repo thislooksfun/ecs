@@ -8,9 +8,9 @@
   import { post } from "$lib/clientUtil";
 
   let errMsg = "";
-  let email = "a@b.d";
+  let email = "";
   let emailError = "";
-  let password = "pw";
+  let password = "";
   let pwError = "";
   export let done: () => void;
 

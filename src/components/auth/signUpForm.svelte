@@ -8,11 +8,11 @@
   import { post } from "$lib/clientUtil";
 
   let errMsg = "";
-  let email = "a@b.c";
+  let email = "";
   let emailError = "";
-  let password = "pw";
+  let password = "";
   let pwError = "";
-  let password2 = "pw";
+  let password2 = "";
   let pw2Error = "";
 
   export let done: () => void;
