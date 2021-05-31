@@ -67,20 +67,17 @@
     <span>ERROR: {errMsg}</span>
   {/if}
 
-  <EmailInput bind:value={email} status={!!emailError ? "error" : undefined}>
+  <EmailInput bind:value={email} status={emailError ? "error" : undefined}>
     <span slot="label">Email</span>
     <span slot="validation">{emailError}</span>
   </EmailInput>
 
-  <PasswordInput bind:value={password} status={!!pwError ? "error" : undefined}>
+  <PasswordInput bind:value={password} status={pwError ? "error" : undefined}>
     <span slot="label">Password</span>
     <span slot="validation">{pwError}</span>
   </PasswordInput>
 
-  <PasswordInput
-    bind:value={password2}
-    status={!!pw2Error ? "error" : undefined}
-  >
+  <PasswordInput bind:value={password2} status={pw2Error ? "error" : undefined}>
     <span slot="label">Verify Password</span>
     <span slot="validation">{pw2Error}</span>
   </PasswordInput>
