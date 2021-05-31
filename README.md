@@ -1,3 +1,3 @@
 # ECS
 
-This project is in very early alpha. There are no tutorials yet.
+This project is very early in development. Use at your own risk.
