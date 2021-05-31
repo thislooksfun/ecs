@@ -1,5 +1,11 @@
-import type { RequestHandler } from "@sveltejs/kit";
+// Route: /api/v1/ping
 
-export const get: RequestHandler = () => {
+import type { ApiRequestHandler } from "$api/v1/_types";
+
+export interface PingResponse {
+  pong: number;
+}
+
+export const get: ApiRequestHandler<any, PingResponse> = () => {
   return { body: { pong: Date.now() } };
 };

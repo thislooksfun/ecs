@@ -1,18 +1,17 @@
 // Route: /api/v1/me/set/password
 
-import { ok, unauthorized } from "$lib/statuses";
-import type { Locals } from "$lib/types";
-import type { RequestHandler } from "@sveltejs/kit";
+import type { ApiEndpointError, ApiRequestHandler } from "$api/v1/_types";
+import { ok, unauthorized } from "$api/v1/_statuses";
 import { StatusCodes } from "http-status-codes";
 
-const invalid = {
+const invalid: ApiEndpointError = {
   status: StatusCodes.BAD_REQUEST,
-  body: { errmsg: "You must provide an old and new password" },
+  body: { error: { msg: "You must provide an old and new password" } },
 };
 
-const mismatch = {
+const mismatch: ApiEndpointError = {
   status: StatusCodes.UNAUTHORIZED,
-  body: { errmsg: "The password is incorrect" },
+  body: { error: { msg: "The password is incorrect" } },
 };
 
 interface Body {
@@ -20,7 +19,8 @@ interface Body {
   newpass?: string;
 }
 
-export const post: RequestHandler<Locals, Body> = async request => {
+// Expected body: { oldpass: string, newpass: string }
+export const post: ApiRequestHandler<Body> = async request => {
   const user = request.locals.user;
   if (!user) return unauthorized;
 

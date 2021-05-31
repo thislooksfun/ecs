@@ -4,8 +4,10 @@
   import PasswordInput from "$theme/form/input/password.svelte";
   import Submit from "$theme/form/submit.svelte";
 
+  import type { ApiError } from "$api/v1/_types";
   import { post } from "$lib/clientUtil";
 
+  let errMsg = "";
   let email = "a@b.c";
   let emailError = "";
   let password = "pw";
@@ -35,26 +37,22 @@
     return valid;
   }
 
-  interface SignUpResponse {
-    successful: true;
+  function setErrors({ error }: ApiError) {
+    const { msg, map } = error;
+    errMsg = msg ?? "";
+    emailError = map?.email ?? "";
+    pwError = map?.password ?? "";
+    pw2Error = map?.password2 ?? "";
   }
 
   async function submit() {
     if (!validate()) return;
 
     const path = "/api/v1/auth/signup";
-    const res = await post<SignUpResponse>(path, { email, password });
+    const res = await post(path, { email, password });
 
-    if ("errors" in res) {
-      if (res.errors.email) {
-        emailError = res.errors.email;
-      }
-      if (res.errors.password) {
-        pwError = res.errors.password;
-      }
-      if (res.errors.password2) {
-        pw2Error = res.errors.password2;
-      }
+    if ("error" in res) {
+      setErrors(res);
     } else {
       done();
     }
@@ -64,6 +62,11 @@
 <h1>Create an account</h1>
 
 <Form {submit}>
+  {#if errMsg}
+    <!-- TODO: Display {errMsg} better -->
+    <span>ERROR: {errMsg}</span>
+  {/if}
+
   <EmailInput bind:value={email} status={!!emailError ? "error" : undefined}>
     <span slot="label">Email</span>
     <span slot="validation">{emailError}</span>

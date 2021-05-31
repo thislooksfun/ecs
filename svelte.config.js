@@ -13,6 +13,7 @@ const config = {
     vite: {
       resolve: {
         alias: {
+          $api: path.resolve(srcDir, "routes/api"),
           $theme: path.resolve(srcDir, "theme"),
           $components: path.resolve(srcDir, "components"),
         },

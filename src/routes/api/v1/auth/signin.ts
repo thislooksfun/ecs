@@ -1,15 +1,15 @@
 // Route: /api/v1/auth/signin
 
-import type { Locals } from "$lib/types";
-import type { RequestHandler } from "@sveltejs/kit";
+import type { ApiEndpointError, ApiRequestHandler } from "$api/v1/_types";
 import { dev } from "$app/env";
 import { StatusCodes } from "http-status-codes";
 import { User, Session } from "$lib/db";
 import cookie from "cookie";
+import { ok } from "$api/v1/_statuses";
 
-const invalid = {
+const invalid: ApiEndpointError = {
   status: StatusCodes.BAD_REQUEST,
-  body: { errmsg: "Invalid email or password" },
+  body: { error: { msg: "Invalid email or password" } },
 };
 
 interface Body {
@@ -17,7 +17,7 @@ interface Body {
   password?: string;
 }
 
-export const post: RequestHandler<Locals, Body> = async request => {
+export const post: ApiRequestHandler<Body> = async request => {
   const { email, password } = request.body;
   if (!email || !password) return invalid;
 
@@ -27,16 +27,17 @@ export const post: RequestHandler<Locals, Body> = async request => {
 
   request.locals.user = user;
   const tkn = await Session.create(user.id);
-  return {
-    body: { successful: true },
-    headers: {
-      "set-cookie": cookie.serialize("session", tkn, {
-        path: "/",
-        httpOnly: true,
-        secure: !dev,
-        // TODO: Set a long maxage if the user
-        // maxAge: 2592000,
-      }),
-    },
+
+  const res = ok;
+  res.headers = {
+    "set-cookie": cookie.serialize("session", tkn, {
+      path: "/",
+      httpOnly: true,
+      secure: !dev,
+      // TODO: Set a long maxage if the user checks 'remember me'
+      // maxAge: 2592000,
+    }),
   };
+
+  return res;
 };

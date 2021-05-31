@@ -1,10 +1,13 @@
 // Route: /api/v1/me
 
-import { unauthorized } from "$lib/statuses";
-import type { Locals } from "$lib/types";
-import type { RequestHandler } from "@sveltejs/kit";
+import type { ApiRequestHandler } from "$api/v1/_types";
+import { unauthorized } from "$api/v1/_statuses";
 
-export const get: RequestHandler<Locals> = async request => {
+export interface GetMeResponse {
+  email: string;
+}
+
+export const get: ApiRequestHandler<any, GetMeResponse> = async request => {
   const user = request.locals.user;
   if (!user) return unauthorized;
 

@@ -1,26 +1,25 @@
 // Route: /api/v1/auth/signup
 
+import type { ApiEndpointError, ApiRequestHandler } from "$api/v1/_types";
 import { dev } from "$app/env";
-import type { RequestHandler } from "@sveltejs/kit";
-import type { Locals } from "$lib/types";
 import cookie from "cookie";
 import { StatusCodes } from "http-status-codes";
 import { User } from "$lib/db";
 import { Session } from "$lib/db/session";
 
-const missingEmail = {
+const missingEmail: ApiEndpointError = {
   status: StatusCodes.BAD_REQUEST,
-  body: { errors: { email: "You must provide an email" } },
+  body: { error: { map: { email: "You must provide an email" } } },
 };
 
-const missingPass = {
+const missingPass: ApiEndpointError = {
   status: StatusCodes.BAD_REQUEST,
-  body: { errors: { password: "You must provide a password" } },
+  body: { error: { map: { password: "You must provide a password" } } },
 };
 
-const duplicate = {
+const duplicate: ApiEndpointError = {
   status: StatusCodes.BAD_REQUEST,
-  body: { errors: { email: "That email has already been used" } },
+  body: { error: { map: { email: "That email has already been used" } } },
 };
 
 interface Body {
@@ -28,7 +27,7 @@ interface Body {
   password?: string;
 }
 
-export const post: RequestHandler<Locals, Body> = async request => {
+export const post: ApiRequestHandler<Body> = async request => {
   // 1. Validate the credentials
   const { email, password } = request.body;
   if (!email) return missingEmail;

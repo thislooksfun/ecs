@@ -22,6 +22,7 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "paths": {
+      "$api/*": ["src/routes/api/*"],
       "$theme/*": ["src/theme/*"],
       "$components/*": ["src/componenets/*"],
       "$lib/*": ["src/lib/*"]

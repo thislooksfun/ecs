@@ -10,15 +10,11 @@
   let password = "pw";
   export let done: () => void;
 
-  interface SignInResponse {
-    successful: true;
-  }
-
   async function submit() {
     const path = "/api/v1/auth/signin";
-    const res = await post<SignInResponse>(path, { email, password });
+    const res = await post(path, { email, password });
 
-    if ("errors" in res) {
+    if ("error" in res) {
       // TODO: Handle errors
     } else {
       done();

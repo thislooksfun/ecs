@@ -1,5 +1,6 @@
 import type { Writable } from "svelte/store";
-import type { ErrorResponse, Session } from "$lib/types";
+import type { Session } from "$lib/types";
+import type { ApiError } from "$api/v1/_types";
 import { browser } from "$app/env";
 import { session as untypedSession } from "$app/stores";
 import * as util from "$lib/util";
@@ -19,15 +20,15 @@ export function updateSession(update: (s: Session) => void) {
   });
 }
 
-export async function get<T>(endpoint: string): Promise<ErrorResponse | T> {
+export async function get<T = {}>(endpoint: string): Promise<ApiError | T> {
   ensureBrowser();
-  return await util.get(fetch, endpoint);
+  return await util.get<T>(fetch, endpoint);
 }
 
-export async function post<T>(
+export async function post<T = {}>(
   endpoint: string,
   data: any
-): Promise<ErrorResponse | T> {
+): Promise<ApiError | T> {
   ensureBrowser();
-  return await util.post(fetch, endpoint, data);
+  return await util.post<T>(fetch, endpoint, data);
 }
