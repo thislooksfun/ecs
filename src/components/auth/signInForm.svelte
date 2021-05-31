@@ -4,18 +4,29 @@
   import PasswordInput from "$theme/form/input/password.svelte";
   import Submit from "$theme/form/submit.svelte";
 
+  import type { ApiError } from "$api/v1/_types";
   import { post } from "$lib/clientUtil";
 
+  let errMsg = "";
   let email = "a@b.d";
+  let emailError = "";
   let password = "pw";
+  let pwError = "";
   export let done: () => void;
+
+  function setErrors({ error }: ApiError) {
+    const { msg, map } = error;
+    errMsg = msg ?? "";
+    emailError = map?.email ?? "";
+    pwError = map?.password ?? "";
+  }
 
   async function submit() {
     const path = "/api/v1/auth/signin";
     const res = await post(path, { email, password });
 
     if ("error" in res) {
-      // TODO: Handle errors
+      setErrors(res);
     } else {
       done();
     }
@@ -25,12 +36,19 @@
 <h1>Sign into your account</h1>
 
 <Form {submit}>
-  <EmailInput bind:value={email}>
+  {#if errMsg}
+    <!-- TODO: Display {errMsg} better -->
+    <span>ERROR: {errMsg}</span>
+  {/if}
+
+  <EmailInput bind:value={email} status={emailError ? "error" : undefined}>
     <span slot="label">Email</span>
+    <span slot="validation">{emailError}</span>
   </EmailInput>
 
-  <PasswordInput bind:value={password}>
+  <PasswordInput bind:value={password} status={pwError ? "error" : undefined}>
     <span slot="label">Password</span>
+    <span slot="validation">{pwError}</span>
   </PasswordInput>
 
   <Submit label="Sign In" />
