@@ -1,6 +1,7 @@
 import type { EndpointOutput } from "@sveltejs/kit";
 import type { Headers } from "@sveltejs/kit/types/helper";
 import type { Locals } from "$lib/types";
+import type { ServerRequest } from "@sveltejs/kit/types/hooks";
 
 export interface ApiError {
   error: {
