@@ -14,6 +14,25 @@
   let pwError = "";
   export let done: () => void;
 
+  function validate() {
+    let valid = true;
+    if (!email) {
+      valid = false;
+      emailError = "You must enter your email";
+    } else {
+      emailError = "";
+    }
+
+    if (!password) {
+      valid = false;
+      pwError = "You must enter a password";
+    } else {
+      pwError = "";
+    }
+
+    return valid;
+  }
+
   function setErrors({ error }: ApiError) {
     const { msg, map } = error;
     errMsg = msg ?? "";
@@ -22,6 +41,8 @@
   }
 
   async function submit() {
+    if (!validate()) return;
+
     const path = "/api/v1/auth/signin";
     const res = await post(path, { email, password });
 
