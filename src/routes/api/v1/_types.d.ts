@@ -13,13 +13,13 @@ export interface ApiError {
 export type ApiEndpointError = {
   status?: number;
   headers?: Partial<Headers>;
-  body?: ApiError;
+  body: ApiError;
 };
 
 export type ApiEndpointOutput<T = unknown> = {
   status?: number;
   headers?: Partial<Headers>;
-  body?: ApiError | T;
+  body: ApiError | T;
 };
 
 export type ApiRequestHandler<Body = unknown, ResponseBody = unknown> = (

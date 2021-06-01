@@ -6,4 +6,7 @@ export const unauthorized: ApiEndpointError = {
   body: { error: { msg: "You must be logged in" } },
 };
 
-export const ok: ApiEndpointOutput = { status: StatusCodes.OK };
+export const ok: ApiEndpointOutput = {
+  status: StatusCodes.OK,
+  body: {},
+};
