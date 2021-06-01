@@ -22,16 +22,22 @@
     if (!email) {
       valid = false;
       emailError = "You must enter your email";
+    } else {
+      emailError = "";
     }
 
     if (!password) {
       valid = false;
       pwError = "You must enter a password";
+    } else {
+      pwError = "";
     }
 
     if (password !== password2) {
       valid = false;
       pw2Error = "Your passwords must match";
+    } else {
+      pw2Error = "";
     }
 
     return valid;
