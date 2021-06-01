@@ -17,7 +17,7 @@
 
   export let done: () => void;
 
-  async function validate() {
+  function validate() {
     let valid = true;
     if (!email) {
       valid = false;
