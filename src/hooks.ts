@@ -3,13 +3,27 @@ import type { Locals, Session } from "$lib/types";
 import { signoutCookie } from "./routes/api/v1/auth/signout";
 import { User } from "$lib/db";
 import cookie from "cookie";
+import cookieSig from "cookie-signature";
+import { CookieSecret } from "$lib/env";
+
+async function parseSession(session: string, locals: Locals) {
+  if (!session) return;
+
+  const token = cookieSig.unsign(session, CookieSecret);
+  if (!token) return;
+
+  const user = await User.forSession(token);
+  if (!user) return;
+
+  locals.sessionToken = token;
+  locals.user = user;
+}
 
 export const handle: Handle = async ({ request, render }) => {
   const cookies = cookie.parse(request.headers.cookie || "");
 
   if (cookies.session) {
-    request.locals.sessionToken = cookies.session;
-    request.locals.user = await User.forSession(cookies.session);
+    await parseSession(cookies.session, request.locals);
   }
 
   // TODO https://github.com/sveltejs/kit/issues/1046

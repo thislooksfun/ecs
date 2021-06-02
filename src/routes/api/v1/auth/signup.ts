@@ -6,6 +6,8 @@ import cookie from "cookie";
 import { StatusCodes } from "http-status-codes";
 import { User } from "$lib/db";
 import { Session } from "$lib/db/session";
+import cookieSig from "cookie-signature";
+import { CookieSecret } from "$lib/env";
 
 const missingEmail: ApiEndpointError = {
   status: StatusCodes.BAD_REQUEST,
@@ -40,10 +42,12 @@ export const post: ApiRequestHandler<Body> = async request => {
 
   request.locals.user = user;
   const tkn = await Session.create(user.id);
+  const session = cookieSig.sign(tkn, CookieSecret);
+
   return {
     body: { successful: true },
     headers: {
-      "set-cookie": cookie.serialize("session", tkn, {
+      "set-cookie": cookie.serialize("session", session, {
         path: "/",
         httpOnly: true,
         secure: !dev,

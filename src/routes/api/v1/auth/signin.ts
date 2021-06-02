@@ -5,6 +5,8 @@ import { dev } from "$app/env";
 import { StatusCodes } from "http-status-codes";
 import { User, Session } from "$lib/db";
 import cookie from "cookie";
+import cookieSig from "cookie-signature";
+import { CookieSecret } from "$lib/env";
 import { ok } from "$api/v1/_statuses";
 
 const invalid: ApiEndpointError = {
@@ -27,10 +29,11 @@ export const post: ApiRequestHandler<Body> = async request => {
 
   request.locals.user = user;
   const tkn = await Session.create(user.id);
+  const session = cookieSig.sign(tkn, CookieSecret);
 
   const res = ok;
   res.headers = {
-    "set-cookie": cookie.serialize("session", tkn, {
+    "set-cookie": cookie.serialize("session", session, {
       path: "/",
       httpOnly: true,
       secure: !dev,
