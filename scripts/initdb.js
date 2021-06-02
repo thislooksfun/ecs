@@ -5,6 +5,7 @@ config();
 
 // TODO: Make this an option
 const recreate = true;
+const prefill = true;
 
 (async () => {
   const client = new pg.Client({ connectionString: process.env.DATABASE_URL });
@@ -56,6 +57,12 @@ const recreate = true;
       );
     `);
     console.log("done");
+
+    if (prefill) {
+      await client.query(
+        "INSERT INTO users (email, email_verified, passhash) VALUES ('a@b.c', true, '$2b$10$yUOhpBr/ceI15OJfn7qJ5eW5pB2j2ka9TZWJDlXIEaVGFEKOIutda')"
+      );
+    }
   } finally {
     await client.end();
   }
