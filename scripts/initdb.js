@@ -27,8 +27,8 @@ const prefill = true;
     process.stdout.write("  'meta'... ");
     await client.query(`
       CREATE TABLE IF NOT EXISTS meta (
-          key character varying PRIMARY KEY,
-          value character varying NOT NULL
+          key text PRIMARY KEY,
+          value text NOT NULL
       );
     `);
     console.log("done");
@@ -37,11 +37,11 @@ const prefill = true;
     await client.query(`
       CREATE TABLE IF NOT EXISTS users (
           id integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-          email character varying NOT NULL UNIQUE,
+          email text NOT NULL UNIQUE,
           email_verified boolean NOT NULL DEFAULT false,
-          passhash character varying,
+          passhash text,
           -- TODO: set up Sign In With Apple?
-          -- siwaid character varying,
+          -- siwaid text,
           -- CONSTRAINT useable_login CHECK (num_nonnulls(passhash, siwaid) > 0)
           CONSTRAINT useable_login CHECK (num_nonnulls(passhash) > 0)
       );
