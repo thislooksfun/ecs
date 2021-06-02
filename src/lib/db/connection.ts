@@ -1,11 +1,8 @@
 import type { QueryResult, QueryResultRow } from "pg";
-import { config } from "dotenv";
+import { DatabaseUrl } from "$lib/env";
 import pg from "pg";
 
-config();
-
-// Using string keys pending vitejs/vite#3176
-const pool = new pg.Pool({ connectionString: process.env["DATABASE_URL"] });
+const pool = new pg.Pool({ connectionString: DatabaseUrl });
 
 export async function query<
   R extends QueryResultRow = any,
