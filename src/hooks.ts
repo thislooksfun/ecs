@@ -1,7 +1,7 @@
 import type { Handle, GetSession } from "@sveltejs/kit";
 import type { Locals, ClientSession } from "$lib/types";
 import { signoutCookie } from "./routes/api/v1/auth/signout";
-import { User } from "$lib/db";
+import { Session, User } from "$lib/db";
 import cookie from "cookie";
 import cookieSig from "cookie-signature";
 import { CookieSecret } from "$lib/env";
@@ -14,6 +14,8 @@ async function parseSession(session: string, locals: Locals) {
 
   const user = await User.forSession(token);
   if (!user) return;
+
+  await Session.updateUsage(token);
 
   locals.sessionToken = token;
   locals.user = user;

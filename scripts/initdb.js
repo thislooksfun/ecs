@@ -53,7 +53,7 @@ const prefill = true;
       CREATE TABLE IF NOT EXISTS sessions (
           token uuid PRIMARY KEY,
           userid integer NOT NULL REFERENCES users(id) ON DELETE CASCADE,
-          expires bigint NOT NULL
+          last_used bigint NOT NULL
       );
     `);
     console.log("done");
