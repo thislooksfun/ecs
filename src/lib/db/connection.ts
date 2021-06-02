@@ -8,7 +8,6 @@ export async function query<
   R extends QueryResultRow = any,
   I extends any[] = any[]
 >(query: string, values?: I): Promise<QueryResult<R>> {
-  console.log(`Running query '${query}' with arguments '${values}'`);
   return await pool.query(query, values);
 }
 
