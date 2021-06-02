@@ -51,7 +51,7 @@ const prefill = true;
     process.stdout.write("  'sessions'... ");
     await client.query(`
       CREATE TABLE IF NOT EXISTS sessions (
-          token uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+          token uuid PRIMARY KEY,
           userid integer NOT NULL REFERENCES users(id) ON DELETE CASCADE,
           expires bigint NOT NULL
       );

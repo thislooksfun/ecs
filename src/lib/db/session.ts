@@ -1,4 +1,5 @@
 import { del, insert } from "./connection";
+import { v4 as uuidSecure } from "@lukeed/uuid/secure";
 
 const oneMinute = 60;
 const oneHour = 60 * oneMinute;
@@ -10,8 +11,9 @@ export class Session {
   static async create(userid: number): Promise<string> {
     const unixNow = Math.floor(Date.now() / 1000);
     const expires = unixNow + sixMonths;
-    const { rows } = await insert("sessions", { userid, expires }, "token");
-    return rows[0].token;
+    const token = uuidSecure();
+    await insert("sessions", { token, userid, expires });
+    return token;
   }
 
   static async revoke(token: string): Promise<void> {
