@@ -1,5 +1,5 @@
 import type { Writable } from "svelte/store";
-import type { Session } from "$lib/types";
+import type { ClientSession } from "$lib/types";
 import type { ApiError } from "$api/v1/_types";
 import { browser } from "$app/env";
 import { session as untypedSession } from "$app/stores";
@@ -11,9 +11,9 @@ function ensureBrowser() {
   }
 }
 
-export const session: Writable<Session> = untypedSession;
+export const session: Writable<ClientSession> = untypedSession;
 
-export function updateSession(update: (s: Session) => void) {
+export function updateSession(update: (s: ClientSession) => void) {
   session.update(s => {
     update(s);
     return s;

@@ -1,5 +1,5 @@
 import type { Handle, GetSession } from "@sveltejs/kit";
-import type { Locals, Session } from "$lib/types";
+import type { Locals, ClientSession } from "$lib/types";
 import { signoutCookie } from "./routes/api/v1/auth/signout";
 import { User } from "$lib/db";
 import cookie from "cookie";
@@ -45,7 +45,7 @@ export const handle: Handle = async ({ request, render }) => {
   return response;
 };
 
-export const getSession: GetSession<Locals, Session> = async request => {
+export const getSession: GetSession<Locals, ClientSession> = async request => {
   return {
     loggedIn: !!request.locals.user,
   };

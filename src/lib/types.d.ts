@@ -5,6 +5,6 @@ export interface Locals {
   user?: User;
 }
 
-export interface Session {
+export interface ClientSession {
   loggedIn: boolean;
 }
