@@ -21,7 +21,7 @@ async function parseSession(session: string, locals: Locals) {
   locals.user = user;
 }
 
-export const handle: Handle = async ({ request, render }) => {
+export const handle: Handle = async ({ request, resolve }) => {
   const cookies = cookie.parse(request.headers.cookie || "");
 
   if (cookies.session) {
@@ -33,7 +33,7 @@ export const handle: Handle = async ({ request, render }) => {
     request.method = request.query.get("_method")!.toUpperCase();
   }
 
-  const response = await render(request);
+  const response = await resolve(request);
 
   // If we have an invalid session, clear it.
   if (
