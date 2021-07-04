@@ -9,7 +9,7 @@
     "checkJs": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
-    "importHelpers": true,
+    "importHelpers": false,
     "importsNotUsedAsValues": "error",
     "isolatedModules": true,
     "lib": ["ES2020"],
