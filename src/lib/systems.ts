@@ -1,2 +1,1 @@
-export function assertValidSystem(_s: string, _id: string) {
-}
+export function assertValidSystem(_s: string, _id: string) {}
