@@ -8,3 +8,9 @@ export interface Locals {
 export interface ClientSession {
   loggedIn: boolean;
 }
+
+export interface Character {
+  system: string;
+  name: string;
+  avatarUrl: string;
+}
