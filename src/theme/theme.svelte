@@ -35,6 +35,7 @@
     // Background
     --color-bg-primary: var(--color-grey-l4);
     --color-bg-secondary: var(--color-grey-l3);
+    --color-bg-accent: var(--color-grey-l2);
 
     --color-modal-overlay: rgba(0, 0, 0, 0.4);
   }
@@ -48,6 +49,7 @@
       // Background
       --color-bg-primary: var(--color-grey-d4);
       --color-bg-secondary: var(--color-grey-d3);
+      --color-bg-accent: var(--color-grey-d2);
     }
   }
 
