@@ -7,9 +7,9 @@
     --color-primary: #13b6db;
 
     // Secondary
+    --color-success: #2dce89;
     --color-warning: #fb6340;
     --color-danger: #f5365c;
-    --color-success: #2dce89;
 
     // Neutral
 
