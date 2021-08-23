@@ -16,6 +16,7 @@ const config = {
           $api: path.resolve(srcDir, "routes/api"),
           $theme: path.resolve(srcDir, "theme"),
           $components: path.resolve(srcDir, "components"),
+          $types: path.resolve(srcDir, "types"),
         },
       },
     },

@@ -25,6 +25,7 @@
       "$api/*": ["src/routes/api/*"],
       "$theme/*": ["src/theme/*"],
       "$components/*": ["src/componenets/*"],
+      "$types/*": ["src/types/*"],
       "$lib/*": ["src/lib/*"]
     },
     "resolveJsonModule": true,
