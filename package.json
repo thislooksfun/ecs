@@ -31,7 +31,7 @@
     "@types/cookie": "^0.4.0",
     "@types/cookie-signature": "^1.0.3",
     "@types/pg": "^8.6.0",
-    "commitlint": "^12.1.4",
+    "commitlint": "^17.6.1",
     "del-cli": "^3.0.1",
     "husky": "^6.0.0",
     "is-ci": "^3.0.0",
